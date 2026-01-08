@@ -5,10 +5,7 @@ NeuroFlow is a progressive web application (PWA) designed to manage tasks using 
 
 ## 🚀 Live Demo
 https://neuro-flow-adhd-friendly-ai-persona.vercel.app/
-<img width="1439" height="772" alt="Screenshot 2026-01-08 at 7 33 04 AM" src="https:/<img width="1439" height="772" alt="Screenshot 2026-01-08 at 7 33 22 AM" src="https://github.com/user-attachments/assets/0f4474ab-b466-4970-b2ff-8a695b8df8e1" />
-/github.com/user-attachments/assets/b5c4c715-59ab-4981-af70-2a83f1e120bd" />
 
-## ✨ Features
 - **Traffic Light System:** Strict limits on urgent tasks (Max 3 Red, 2 Yellow, 1 Green).
 - **Time Containers:** Tasks are managed by duration (25m/45m), not strict deadlines.
 - **Anxiety Reset:** A "Panic Button" that clears UI clutter and forces focus on a single task.
