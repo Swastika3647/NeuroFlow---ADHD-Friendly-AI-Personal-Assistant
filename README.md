@@ -1,5 +1,5 @@
 
-# NeuroFlow - ADHD-Friendly AI Personal Assistant
+# NeuroFlow - ADHD-Friendly  Personal Assistant
 
 NeuroFlow is a progressive web application (PWA) designed to manage tasks using neuro-divergent friendly methodologies. It features a "Traffic Light" priority system, Time Containers, and an Anxiety Reset mode.
 
