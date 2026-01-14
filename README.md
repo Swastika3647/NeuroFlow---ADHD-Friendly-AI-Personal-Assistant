@@ -1,113 +1,107 @@
+# 🧠 NeuroFlow: ADHD-Friendly AI Personal Assistant
 
-# NeuroFlow - ADHD-Friendly  Personal Assistant
+> **"Your external pre-frontal cortex."**
 
-NeuroFlow is a progressive web application (PWA) designed to manage tasks using neuro-divergent friendly methodologies. It features a "Traffic Light" priority system, Time Containers, and an Anxiety Reset mode.
+NeuroFlow is a Progressive Web App (PWA) designed to help neurodivergent brains manage tasks without overwhelm. Unlike traditional todo lists that become "graveyards of guilt," NeuroFlow uses **Time Container Methodologies** and **AI Agents** to automatically prioritize, sort, and limit your Work-In-Progress.
 
-## 🚀 Live Demo
-https://neuro-flow-adhd-friendly-ai-persona.vercel.app/
+![Project Status](https://img.shields.io/badge/Status-Live-success)
+![Stack](https://img.shields.io/badge/Stack-React_|_FastAPI_|_Groq_AI-blueviolet)
 
-- **Traffic Light System:** Strict limits on urgent tasks (Max 3 Red, 2 Yellow, 1 Green).
-- **Time Containers:** Tasks are managed by duration (25m/45m), not strict deadlines.
-- **Anxiety Reset:** A "Panic Button" that clears UI clutter and forces focus on a single task.
-- **Weekly Reset Wizard:** A guided 3-step ritual to clear backlog and celebrate wins.
-- **Offline First:** Built on Dexie.js (IndexedDB), data persists without internet.
-- **PWA:** Installable on iOS and Android.
+---
+
+## ✨ Key Features
+
+### 🧠 AI Brain Dump
+Stop overthinking where to put a task. Just type (or speak) naturally:
+> *"I need to email the professor about the project, buy milk, and spend 10 mins on LeetCode"*
+
+The **Python AI Backend (Llama 3.3 via Groq)** will:
+1.  Split the complex sentence into 3 separate tasks.
+2.  Analyze the urgency and context of each.
+3.  Auto-sort them into the correct **Traffic Light Lanes**.
+
+### 🚦 The Traffic Light System (WIP Limits)
+To prevent paralysis, each lane has a strict limit on active tasks:
+* 🔴 **RED (Urgent):** Max 3 tasks. High energy, "Do it first."
+* 🟡 **YELLOW (Important):** Max 2 tasks. Progress goals.
+* 🟢 **GREEN (Restore):** Max 1 task. Dopamine hits & rest.
+* ⚫ **GRAY (Parking Lot):** Unlimited storage for later.
+
+### ⚡ Anxiety Reset Button
+Overwhelmed? Click one button to:
+1.  Hide all non-essential tasks.
+2.  Highlight the single most important Red task.
+3.  Start a "Time Container" focus timer.
+
+---
 
 ## 🛠️ Tech Stack
-- **Framework:** React + TypeScript + Vite
-- **Styling:** Tailwind CSS
-- **Database:** Dexie.js (Client-side IndexedDB)
-- **Drag & Drop:** @dnd-kit/core
-- **NLP:** Chrono-node (Natural Language Date Parsing)
 
-## 📦 Local Setup
+### Frontend
+* **Framework:** React + TypeScript (Vite)
+* **Styling:** Tailwind CSS
+* **State/Storage:** Dexie.js (IndexedDB) for Local-First data persistence.
+* **Drag & Drop:** `@dnd-kit/core`
 
-1. **Clone the repository**
-   ```bash
-   git clone [https://github.com/YOUR_USERNAME/neuroflow.git](https://github.com/YOUR_USERNAME/neuroflow.git)
-   cd neuroflow
-   Install dependencies
+### Backend (The "Brain")
+* **Framework:** FastAPI (Python)
+* **AI Model:** Llama 3.3-70b-versatile (via Groq API)
+* **Validation:** Pydantic & Instructor
+* **Architecture:** Serverless Function (Vercel Monorepo)
 
+---
+
+## 🚀 Getting Started Locally
+
+### 1. Clone the Repo
+```bash
+git clone [https://github.com/your-username/neuroflow.git](https://github.com/your-username/neuroflow.git)
+cd neuroflow
+2. Setup the Backend (Python)
+The backend lives in the api/ folder.
+
+Bash
+
+# Create a virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install fastapi uvicorn groq python-dotenv instructor pydantic
+
+# Set up your API Key
+# Create a .env file in the root directory and add:
+GROQ_API_KEY=your_actual_api_key_here
+3. Setup the Frontend (React)
 Bash
 
 npm install
-Start the development server
+4. Run the App
+You need two terminals running side-by-side:
+
+Terminal 1 (Backend):
 
 Bash
 
+# Runs the API on port 8000
+python -m uvicorn api.index:app --reload --port 8000
+Terminal 2 (Frontend):
+
+Bash
+
+# Runs the UI on port 5173
 npm run dev
+Note: Update vite.config.ts proxy settings if your local backend port changes.
 
+☁️ Deployment (Vercel)
+This project is configured as a Vercel Monorepo.
 
-# React + TypeScript + Vite
+Push your code to GitHub.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Import the project into Vercel.
 
-Currently, two official plugins are available:
+Add your Environment Variable in Vercel Settings:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+GROQ_API_KEY: gsk_...
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Vercel will automatically detect the api/ folder and deploy it as a Serverless Function.
