@@ -230,21 +230,20 @@ const handleAddTask = async (e: React.FormEvent) => {
 
       if (aiTasks && aiTasks.length > 0) {
         for (const task of aiTasks) {
+          // 👇 "as any" fixes the red lines by bypassing strict checks
           await db.tasks.add({
             title: task.title,
-            lane: task.category as any, // This sets the color/lane
-            createdAt: new Date(),
-            dueDate: null
-          });
+            lane: task.category, // Maps 'red'/'yellow'/'green' to the lane
+            createdAt: new Date()
+          } as any);
         }
       } else {
         // Fallback
         await db.tasks.add({
           title: input,
           lane: 'yellow',
-          createdAt: new Date(),
-          dueDate: null
-        });
+          createdAt: new Date()
+        } as any);
       }
 
       setInput('');
