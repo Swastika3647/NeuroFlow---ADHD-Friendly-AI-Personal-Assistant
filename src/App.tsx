@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db, type Task } from './db';
-import { parseInputToTask } from './aiScheduler';
 import { Trash2, Send, Calendar, GripVertical, Ban, Zap, X, CheckCircle, Clock, RotateCcw, RefreshCw, ArrowRight, ChevronDown } from 'lucide-react';
 import { format } from 'date-fns';
 import { DndContext, type DragEndEvent, useDraggable, useDroppable } from '@dnd-kit/core';
+// src/App.tsx (Around line 4)
+import { processBrainDump } from './aiScheduler';
 
 // --- CONFIGURATION ---
 const LANE_CONFIG: Record<string, { limit: number; time: string; minutes: number }> = {
@@ -218,20 +219,40 @@ export default function App() {
     gray: tasks.filter(t => t.lane === 'gray'),
   };
 
-  const handleAddTask = async (e: React.FormEvent) => {
+ // Replace the old handleAddTask with this:
+const handleAddTask = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) return;
+
     try {
-      const newTask = parseInputToTask(input);
-      const limit = LANE_CONFIG[newTask.lane].limit;
-      const currentCount = lanes[newTask.lane as keyof typeof lanes]?.length || 0;
-      if (currentCount >= limit && newTask.lane !== 'gray') {
-        setError(`${newTask.lane.toUpperCase()} is full. Finish one first.`);
-        return; 
+      console.log("Sending to AI Brain...");
+      const aiTasks = await processBrainDump(input);
+
+      if (aiTasks && aiTasks.length > 0) {
+        for (const task of aiTasks) {
+          await db.tasks.add({
+            title: task.title,
+            lane: task.category as any, // This sets the color/lane
+            createdAt: new Date(),
+            dueDate: null
+          });
+        }
+      } else {
+        // Fallback
+        await db.tasks.add({
+          title: input,
+          lane: 'yellow',
+          createdAt: new Date(),
+          dueDate: null
+        });
       }
-      await db.tasks.add(newTask as Task);
-      setInput(''); setError(null);
-    } catch (error) { console.error(error); }
+
+      setInput('');
+      setError(null);
+    } catch (err) {
+      console.error("AI Failed:", err);
+      setError("Could not connect to AI.");
+    }
   };
 
   const handleDragEnd = async (event: DragEndEvent) => {
